@@ -15,7 +15,6 @@
 # close and restart the IDE.
 
 import serial
-import csv
 
 SERIAL_PORT = "/dev/cu.usbserial-110"
 BAUD_RATE = 115200 
