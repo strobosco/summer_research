@@ -1,4 +1,4 @@
-# This file reads the analog output of a single
+# This file reads the analog output of multiple
 # MyoWare sensor. It connects to the serial port,
 # reads in the data and then saves it in a .txt
 # file. From here the data can be manipulated in
@@ -18,7 +18,7 @@ import serial
 
 SERIAL_PORT = "/dev/cu.usbserial-10"
 BAUD_RATE = 115200 
-FILENAME = "arm-test.txt" 
+FILENAME = "arm-test-multiple.txt" 
 
 ser = serial.Serial(SERIAL_PORT, BAUD_RATE)
 print(f"Connected to Arduino port: {SERIAL_PORT}")
