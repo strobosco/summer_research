@@ -3,3 +3,4 @@
 This repository contains all the code that I wrote during my research.
 
 - *single-sensor-logger* --> contains code to log the output of a single sensor
+- *multi-sensor-logger* --> contains code to log the output of multiple sensors
