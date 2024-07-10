@@ -2,3 +2,5 @@ libraries/
 *.csv
 *.txt
 .DS_Store
+.vscode/
+build/

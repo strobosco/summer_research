@@ -16,9 +16,9 @@
 
 import serial
 
-SERIAL_PORT = "/dev/cu.usbserial-110"
+SERIAL_PORT = "/dev/cu.usbserial-10"
 BAUD_RATE = 115200 
-FILENAME = "scissors2.txt" 
+FILENAME = "test.txt" 
 
 ser = serial.Serial(SERIAL_PORT, BAUD_RATE)
 print(f"Connected to Arduino port: {SERIAL_PORT}")
