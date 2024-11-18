@@ -21,24 +21,28 @@
 
   This example code is in the public domain.
 */
+#include <MyoWare.h>
+MyoWare myoware;
 
 void setup() 
 {
   Serial.begin(115200);
   while (!Serial); // optionally wait for serial terminal to open
+
+  myoware.setGainPotentiometer(10.);
 }
 
 void loop() 
 {  
   int sensor1Value = analogRead(A0); // read the input on analog pin A0
-  int sensor2Value = analogRead(A1); 
-  int sensor3Value = analogRead(A2); 
+  //int sensor2Value = analogRead(A1); 
+  //int sensor3Value = analogRead(A2); 
 
-  Serial.print(sensor1Value);
-  Serial.print(",");
-  Serial.print(sensor2Value);
-  Serial.print(",");
-  Serial.println(sensor3Value);
+  Serial.println(sensor1Value);
+  //Serial.print(",");
+  //Serial.print(sensor2Value);
+  //Serial.print(",");
+  //Serial.println(sensor3Value);
 
   // delay(1); // to avoid overloading the serial terminal
 }
