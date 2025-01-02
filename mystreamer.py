@@ -14,6 +14,7 @@
 
 import argparse
 import sys
+import os
 
 import aria.sdk as aria
 
@@ -49,12 +50,21 @@ def parse_args() -> argparse.Namespace:
         "--profile",
         dest="profile_name",
         type=str,
-        default="profile18",
+        default="profile12",
         required=False,
         help="Profile to be used for streaming.",
     )
     parser.add_argument(
         "--device-ip", help="IP address to connect to the device over wifi"
+    )
+    parser.add_argument(
+        "--log", 
+        help="Log sensor and image to designated directory",
+        action="store_true",
+        default=False,
+    )
+    parser.add_argument(
+        "--log_dir", help="Directory to log output"
     )
     return parser.parse_args()
 
@@ -63,6 +73,12 @@ def main():
     args = parse_args()
     if args.update_iptables and sys.platform.startswith("linux"):
         update_iptables()
+
+    # Check if log directory already exists
+    if args.log_dir:
+        output_dir = f"data_collection/{args.log_dir}"
+        if os.path.isdir(output_dir) and args.log_dir:
+            exit("Directory already exists, please retry with a new directory")
 
     #  Optional: Set SDK's log level to Trace or Debug for more verbose logs. Defaults to Info
     aria.set_log_level(aria.Level.Info)
@@ -136,7 +152,8 @@ def main():
     streaming_client.unsubscribe()
     streaming_manager.stop_streaming()
     device_client.disconnect(device)
-    visualizer.print_logs()
+    if args.log and args.log_dir:
+        visualizer.write_logs(args.log_dir)
 
 
 if __name__ == "__main__":

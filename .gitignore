@@ -3,3 +3,5 @@ libraries/
 .DS_Store
 .vscode/
 build/
+*Profiles/
+data_collection/
