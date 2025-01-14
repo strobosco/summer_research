@@ -4,7 +4,6 @@ from collections import deque
 import numpy as np
 from typing import Sequence
 import os
-from PIL import Image
 import cv2
 
 import aria.sdk as aria
@@ -21,14 +20,6 @@ NANOSECOND = 1e-9  # Conversion factor from nanoseconds to seconds
 IMAGE_MODES = {"Left SLAM" : 0, "Right SLAM" : 1, "Eye Track" : 2, "Front RGB" : 3}
 IMU_SENSORS = ["IMU1", "IMU2"]
 OTHER_SENSORS = ["MAGNETOMETER", "BAROMETER"]
-
-# Save an image using Pillow
-def save_image_pillow(image, file_path):
-    # Convert the numpy array to a Pillow Image and save
-    if image.ndim == 3 and image.shape[2] == 3:  # RGB image
-        Image.fromarray(image.astype("uint8")).save(file_path)
-    elif image.ndim == 2:  # Grayscale image
-        Image.fromarray(image.astype("uint8"), mode="L").save(file_path)
 
 class TemporalWindowPlot:
     """
@@ -175,12 +166,6 @@ class MyVisualizer:
             i.close()
 
 
-    def print_log_dimensions(self, image_logs : dict, sensor_logs : dict):
-        for name, data in image_logs.items():
-            print(f"{name} log shape: {data.shape}")
-        for name, data in sensor_logs.items():
-            print(f"{name} log shape: {data.shape}")
-
     def write_logs(self, log_dir):
         print(f"{'-' * 40}")
         print("SAVING LOGS")
@@ -199,19 +184,12 @@ class MyVisualizer:
         }
 
         for log_name, log_data in image_logs.items():
-            # log_path = os.path.join(output_dir, log_name)
-            # os.makedirs(log_path, exist_ok=True)
             output_video = os.path.join(output_dir, f"{log_name}.mp4")
             fps = 10
             frame_size = (log_data[0].shape[1], log_data[0].shape[0])
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # 'XVID' for .avi, 'mp4v' for .mp4
             video_writer = cv2.VideoWriter(output_video, fourcc, fps, frame_size)
             for frame in log_data:
-            # for idx, frame in enumerate(log_data):
-                # Save each image as a PNG file
-                # file_path = os.path.join(log_path, f"{log_name}_{idx:04d}.png")
-                # plt.imsave(file_path, image, cmap="gray" if image.ndim == 2 else None)
-                # save_image_pillow(image, file_path)
                 video_writer.write(cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
             video_writer.release()
             print(f"Saved {log_name} with {len(log_data)} frames")

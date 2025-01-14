@@ -1,7 +1,13 @@
+# folders
 libraries/
-*.csv
-.DS_Store
 .vscode/
 build/
 *Profiles/
 data_collection/
+
+# file types
+*.csv
+*.wav
+
+# files
+.DS_Store

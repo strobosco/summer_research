@@ -17,17 +17,8 @@ import sys
 import os
 
 import aria.sdk as aria
-
-import cv2
-import numpy as np
 from common import quit_keypress, update_iptables
 
-from typing import Sequence
-from projectaria_tools.core.sensor_data import (
-    BarometerData,
-    ImageDataRecord,
-    MotionData,
-)
 from myvisualizer import *
 
 def parse_args() -> argparse.Namespace:
@@ -74,13 +65,13 @@ def main():
     if args.update_iptables and sys.platform.startswith("linux"):
         update_iptables()
 
-    # Check if log directory already exists
+    # Check if log directory already exists, blocks if already exists
     if args.log_dir:
         output_dir = f"data_collection/{args.log_dir}"
         if os.path.isdir(output_dir) and args.log_dir:
             exit("Directory already exists, please retry with a new directory")
 
-    #  Optional: Set SDK's log level to Trace or Debug for more verbose logs. Defaults to Info
+    # Set SDK's log level
     aria.set_log_level(aria.Level.Info)
 
     # Create DeviceClient to begin streaming from code and not CLI
