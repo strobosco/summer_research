@@ -1,0 +1,33 @@
+name: aria
+channels:
+  - 1adrianb
+  - conda-forge
+dependencies:
+  - face_alignment
+  - hickle
+  - imageio
+  - imgaug
+  - iopath
+  - lazy_loader
+  - lightning
+  - matplotlib
+  - numpy=1.23.5
+  - opencv
+  - pandas
+  - python=3.11
+  - pytorch
+  - scikit-image
+  - scikit-learn
+  - scipy
+  - torchvision
+  - pip:
+      - chumpy==0.70
+      - compress-pickle==2.1.0
+      - facenet-pytorch==2.6.0
+      - munch==4.0.0
+      - omegaconf==2.3.0
+      - projectaria-client-sdk==1.1.0
+      - scikit-video==1.1.11
+      - soundfile==0.13.1
+      - torchaudio==2.6.0
+      - wandb==0.19.8
