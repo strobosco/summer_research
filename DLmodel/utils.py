@@ -8,14 +8,38 @@ import torch
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
 
-# Face detector model
-detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")  # Download from Dlib
+def project_to_2d(vertices, scale=5000, translation=(0, 0)):
+    """
+    Projects 3D FLAME vertices to 2D using a weak perspective camera model.
 
-# FLAME model
-flame_model = FLAME("path/to/flame_model.pth")  # Load FLAME model
+    Args:
+        vertices (torch.Tensor): 3D vertices of the FLAME mesh (batch_size, N, 3).
+        scale (float): Scaling factor to adjust depth effect.
+        translation (tuple): Translation (tx, ty) to shift projection.
+
+    Returns:
+        torch.Tensor: Projected 2D landmarks (batch_size, N, 2).
+    """
+    # Extract x, y coordinates from the 3D FLAME output (ignore z)
+    x = vertices[:, :, 0]  # X-coordinates
+    y = vertices[:, :, 1]  # Y-coordinates
+    
+    # Apply weak perspective transformation
+    x_proj = scale * x + translation[0]
+    y_proj = scale * y + translation[1]
+
+    # Return projected 2D coordinates
+    return torch.stack([x_proj, y_proj], dim=-1)  # Shape: (batch_size, N, 2)
+
 
 def extract_FLAME_parameters(video_path, learning_rate, num_iterations):
+  # Face detector model
+  detector = dlib.get_frontal_face_detector()
+  predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")  # Download from Dlib
+
+  # FLAME model
+  flame_model = FLAME("path/to/flame_model.pth")  # Load FLAME model
+  
   cap = cv2.VideoCapture(video_path)
   labels = []
   while cap.isOpened():

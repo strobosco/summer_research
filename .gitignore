@@ -4,10 +4,17 @@ libraries/
 build/
 *Profiles/
 data_collection/
+FLAME2023/
+__pycache__/
+DLmodel/inferno
 
 # file types
 *.csv
 *.wav
+*.zip
+*.png
+*.tar
+*.mp4
 
 # files
 .DS_Store
