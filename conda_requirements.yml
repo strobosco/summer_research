@@ -2,6 +2,7 @@ name: aria
 channels:
   - 1adrianb
   - conda-forge
+  - pypi
 dependencies:
   - aom=3.9.1=h7bae524_0
   - blosc=1.21.6=h7dd00d9_1
