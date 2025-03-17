@@ -7,6 +7,8 @@ data_collection/
 FLAME2023/
 __pycache__/
 DLmodel/inferno
+DLmodel/emoca
+DLmodel/MICA
 
 # file types
 *.csv
